@@ -71,9 +71,12 @@ var OperatorHandlers = function($) {
 		var input = $(elm).parents('tr').find('input.query-value');
 		input.select2("destroy");
 		$.get(choices_url, function(data) {
-			input.select2({'data': data, 'createSearchChoice': function(term) {
-                return { 'id': term, 'text': term };
-            }});
+			var $select = input.select2();
+			for (var i = 0; i < data.length; i++) {
+				var item = data[i];
+				var option = new Option(item.text, item.id, true, true);
+				select.append(option);
+			}
 		});
 	};
 
